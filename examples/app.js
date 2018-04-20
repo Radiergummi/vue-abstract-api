@@ -34,7 +34,7 @@ const app = new Vue(
         console.log( 'received response', photosResponse );
 
         this.photos = photosResponse.results;
-      }
+      },
     }
   }
 );

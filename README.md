@@ -7,6 +7,7 @@
  - Flexible configuration using class properties
  - Well documented, readable code
  - Adapts to almost any API structure
+ - Lightweight layer on top of [axios](https://github.com/axios/axios)
 
 
 ## Installation
