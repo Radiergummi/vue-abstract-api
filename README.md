@@ -82,8 +82,21 @@ To find out on how to wire things together, read on.
 There are two means of configuration:
 
 ### 1. The API configuration (file)
-The API configuration is a plain object with two parameters: The `baseURL` which holds the common shared URL for all of your endpoints, and `endpoints`, an Array holding all of said endpoints.
+The API configuration is a plain object with two required parameters: The `baseURL` which holds the common shared URL for all of your endpoints, and `endpoints`, an Array holding all of said endpoints.
 What you want to do here is put in all of your endpoint classes (no instances) just as you imported them so the plugin knows about them. In the background, the endpoints will be *mounted* on the `Api` instance, providing them with access to the HTTP driver and more.
+
+Additional available, optional options:
+
+#### `headers`
+Key-value map of headers to append to every request.
+
+#### `authentication`
+Object with the properties `username` and `password`. They will be directly passed to axios, therefore transformed into an `Authorization: Basic ${username}:${password}` header.
+
+#### `interceptors`
+Object with the properties `request` and `response`. Both can contain the respective interceptors and will be directly passed down to axios.
+
+What's **not** included right now is to change the content-type to anything but JSON. That will likely change soon, though.
 
 You can either put that configuration object in a separate file for readability, or just throw all the imports in your `main.js`.
 
