@@ -125,6 +125,8 @@ All configuration happens via static property getters. This has several advantag
  - They can be overridden from anywhere in the chain, including instances
  - Their types are documented and available via TypeScript definitions (included)
 
+Additionally, any methods accept an options object as their last parameter that will get passed down to axios.
+
 #### Configuration options
 The following list shows all available getters. To view an example of a fully configured endpoint, take a look at [`examples/endpoints/Photos`](./examples/endpoints/Photos.js).
 
