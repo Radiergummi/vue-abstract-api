@@ -260,6 +260,35 @@ static get mapOrders () {
 }
 ```
 
+## Compatibility with other frameworks (React, Angular, [Vanilla](http://vanilla-js.com/))
+Basically, [src/index.js](./src/index.js) provides a Vue plugin. There is nothing special happening there you wouldn't be able to recreate in any other framework. Important are just the following lines:
+
+```js
+Vue.prototype.$api = new Api( options.baseUrl, options );
+
+    for ( let EndpointClass of options.endpoints ) {
+      Vue.prototype.$api.mount( new EndpointClass() );
+    }
+```
+
+which translate directly to:
+
+```js
+const api = new Api( options.baseUrl, options );
+
+    for ( let EndpointClass of options.endpoints ) {
+        api.mount( new EndpointClass() );
+    }
+```
+
+If there is anyone interested in providing plugins for other frameworks and would be willing to create a PR, I'll merge it.
 
 ## Contribution
-I'm happy for anyone contributing code! Sprinkled throughout this readme are several points that could be improved upon. If you're unsure, just open an issue.
+I'm happy for anyone contributing code! Ideas:
+
+ - Implement testing
+ - Automatic, selective cache purging
+ - More examples
+ -
+
+Sprinkled throughout this readme are several other points that could be improved upon. If you're unsure, just open an issue.
