@@ -1,5 +1,5 @@
 # vue-abstract-api
-> This is a lean API connector for Vue.js (though there is no dependency: You can use this in any framework you'd like to).
+> This is a lean API connector for Vue.js (though there is no dependency on it: You can use this in any framework you'd like to).
 
 
 ## Features
@@ -17,7 +17,7 @@ To install the plugin, just `npm install` it.
 npm install vue-abstract-api
 ```
 
-For development:
+For development/to preview the example app (not complete yet, but working):
 ```bash
 cd vue-abstract-api
 npm install
@@ -92,10 +92,10 @@ Additional available, optional options:
 Key-value map of headers to append to every request.
 
 #### `authentication`
-Object with the properties `username` and `password`. They will be directly passed to axios, therefore transformed into an `Authorization: Basic ${username}:${password}` header.
+Object with the properties `username` and `password`. They will be directly passed to axios, therefore transformed into an `Authorization: Basic ${username}:${password}` header. See [here](https://github.com/axios/axios#request-config).
 
 #### `interceptors`
-Object with the properties `request` and `response`. Both can contain the respective interceptors and will be directly passed down to axios.
+Object with the properties `request` and `response`. Both can contain the respective interceptors and will be directly passed down to axios. See [here](https://github.com/axios/axios#interceptors).
 
 What's **not** included right now is to change the content-type to anything but JSON. That will likely change soon, though.
 
@@ -146,6 +146,8 @@ Whether this endpoint is cachable. If this property is true, any GET response wi
 You can still skip the cache lookup by passing the `cache: false` option on requests, however.  
 Be aware of the implications, though: The cache has no automatic TTL, so you need to flush the cache manually using the `flushCache()` method, if necessary.  
 TODO: Ideally, all the writing methods should intelligently figure out the consequences of their actions, flushing the entire cache or just partials after execution.
+
+Responses that have been served from cache have the property `fromCache` set to true.
 
 ```js
 static get cachable () {
@@ -203,8 +205,8 @@ static get defaultParameters () {
 
 
 ##### `mapResults`
-Retrieves a mapper function to figure out results and meta data. By default, we assume the API just returns all matched entities as an array, without any additional meta data.  
-You can, however, set additional meta data fields here, the most popular being "count" and "total". Count reflects the number of retrieved items (usually the length of the response data, but there are additional concerns where using an API-provided value might be better), Total is the total number of available, matching entities on the server. This is most useful for paginated results.  
+Retrieves a mapper function to figure out results and meta data. By default, we assume the API just returns all matched entities as an array, without any additional meta data - there may be cases though where your response data is wrapped inside a `results` field, for example. This callback allows you to unwrap the results and set more meta fields on your responses.
+As I said you can set additional meta data fields here, the most popular being "count" and "total". Count reflects the number of retrieved items (usually the length of the response data, but there are additional concerns where using an API-provided value might be better), Total is the total number of available, matching entities on the server. This is most useful for paginated results.
 Beyond these, there might be more fields you want to populate. The `ApiResponse` object will provide getters for any of them, so what you want to do here is populate the fields with values from the response data.  
 Since we receive the actual `AxiosResponse` object here, we also have access to headers and so on.  
 
@@ -257,3 +259,7 @@ static get mapOrders () {
     .join( ',' );
 }
 ```
+
+
+## Contribution
+I'm happy for anyone contributing code! Sprinkled throughout this readme are several points that could be improved upon. If you're unsure, just open an issue.
