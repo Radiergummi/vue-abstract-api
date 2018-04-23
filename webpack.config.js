@@ -4,9 +4,11 @@
  __dirname
  */
 
+const path = require( 'path' );
+
 module.exports = {
   entry:     [
-    './examples/app.js'
+    './examples/main.js'
   ],
   output:    {
     path:       __dirname + '/examples/build',
@@ -29,6 +31,10 @@ module.exports = {
         test:    /\.vue$/,
         exclude: /node_modules/,
         use:     [ 'vue-loader' ]
+      },
+      {
+        exclude: [ /\.js$/, /\.html$/, /\.vue/ ],
+        use:     [ 'file-loader' ]
       }
     ]
   },

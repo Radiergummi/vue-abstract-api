@@ -60,8 +60,8 @@ class Photos extends Resource {
     return {
       limit:                '_limit',
       offset:               '_start',
-      orderDirection:       'direction',
-      orderColumn:          'order_column',
+      orderDirection:       '_order',
+      orderColumn:          '_sort',
       multipleOrderColumns: 'order_columns',
       filterColumns:        null
     };
