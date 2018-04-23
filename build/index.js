@@ -3,13 +3,29 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.ApiResponse = exports.Resource = exports.Endpoint = undefined;
 
 var _Api = require('./Api');
 
 var _Api2 = _interopRequireDefault(_Api);
 
+var _ApiResponse = require('./ApiResponse');
+
+var _ApiResponse2 = _interopRequireDefault(_ApiResponse);
+
+var _Endpoint = require('./Endpoint');
+
+var _Endpoint2 = _interopRequireDefault(_Endpoint);
+
+var _Resource = require('./Resource');
+
+var _Resource2 = _interopRequireDefault(_Resource);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+exports.Endpoint = _Endpoint2.default;
+exports.Resource = _Resource2.default;
+exports.ApiResponse = _ApiResponse2.default;
 exports.default = {
   install: function install(Vue) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};

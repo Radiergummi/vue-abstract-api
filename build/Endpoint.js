@@ -8,9 +8,9 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Response = require('./Response');
+var _ApiResponse = require('./ApiResponse');
 
-var _Response2 = _interopRequireDefault(_Response);
+var _ApiResponse2 = _interopRequireDefault(_ApiResponse);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -218,10 +218,10 @@ var Endpoint = function () {
      * Performs a GET request. If the endpoint is marked as cachable, we try to serve the request from
      * the cache. That way, near-instant and even offline requests are possible.
      *
-     * @param   {String}             path    path to the resource
-     * @param   {Object}             options request options
-     * @param   {*}                  args    arguments to the adapter method
-     * @returns {Promise<ApiResponse>}          response promise
+     * @param   {String}               path    path to the resource
+     * @param   {Object}               options request options
+     * @param   {*}                    args    arguments to the adapter method
+     * @returns {Promise<ApiResponse>}         response promise
      */
 
   }, {
@@ -234,14 +234,14 @@ var Endpoint = function () {
           args[_key - 2] = arguments[_key];
         }
 
-        var _api$http, cacheUrl, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, _ref6, _ref7, name, value, response;
+        var _api$http, cacheUrl, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, _ref6, _ref7, name, value, _response, response;
 
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 if (!this.constructor.cachable) {
-                  _context.next = 31;
+                  _context.next = 33;
                   break;
                 }
 
@@ -296,18 +296,23 @@ var Endpoint = function () {
 
               case 21:
                 if (!this.cache.has(cacheUrl.toString())) {
-                  _context.next = 23;
+                  _context.next = 25;
                   break;
                 }
 
-                return _context.abrupt('return', this.cache.get(cacheUrl.toString()));
+                _response = this.cache.get(cacheUrl.toString());
 
-              case 23:
-                _context.t1 = _Response2.default;
-                _context.next = 26;
+
+                _response.fromCache = true;
+
+                return _context.abrupt('return', _response);
+
+              case 25:
+                _context.t1 = _ApiResponse2.default;
+                _context.next = 28;
                 return (_api$http = this.api.http).get.apply(_api$http, [path, options].concat(args));
 
-              case 26:
+              case 28:
                 _context.t2 = _context.sent;
                 _context.t3 = this.constructor.mapResults;
                 response = new _context.t1(_context.t2, _context.t3);
@@ -318,17 +323,17 @@ var Endpoint = function () {
 
                 return _context.abrupt('return', response);
 
-              case 31:
-                _context.t4 = _Response2.default;
-                _context.next = 34;
+              case 33:
+                _context.t4 = _ApiResponse2.default;
+                _context.next = 36;
                 return (_api$http2 = this.api.http).get.apply(_api$http2, [path, options].concat(args));
 
-              case 34:
+              case 36:
                 _context.t5 = _context.sent;
                 _context.t6 = this.constructor.mapResults;
                 return _context.abrupt('return', new _context.t4(_context.t5, _context.t6));
 
-              case 37:
+              case 39:
               case 'end':
                 return _context.stop();
             }

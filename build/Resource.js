@@ -70,8 +70,6 @@ var Resource = function (_Endpoint) {
         params: Object.assign({}, this._activeOptions.parameters, options.parameters)
       };
 
-      console.log(mergedOptions);
-
       if (mergedOptions.paginate) {
         requestOptions.params[this.constructor.parameterNames.limit] = mergedOptions.limit;
         requestOptions.params[this.constructor.parameterNames.offset] = mergedOptions.offset;
@@ -82,14 +80,14 @@ var Resource = function (_Endpoint) {
         requestOptions.params[this.constructor.parameterNames.orderDirection] = mergedOptions.orderDirection;
       }
 
-      if (mergedOptions.multipleOrderColumns) {
-        var orderColumns = Object.entries(mergedOptions.multipleOrderColumns);
+      if (mergedOptions.orderColumns) {
+        var orderColumns = Object.entries(mergedOptions.orderColumns);
 
         if (orderColumns.length === 1) {
           requestOptions.params[this.constructor.parameterNames.orderColumn] = orderColumns[0][0];
           requestOptions.params[this.constructor.parameterNames.orderDirection] = orderColumns[0][1];
         } else {
-          requestOptions.params[this.constructor.parameterNames.multipleOrderColumns] = this.constructor.mapOrders(mergedOptions.multipleOrderColumns);
+          requestOptions.params[this.constructor.parameterNames.orderColumns] = this.constructor.mapOrders(mergedOptions.orderColumns);
         }
       }
 

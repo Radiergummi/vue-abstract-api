@@ -1,6 +1,12 @@
 'use strict';
 
-import Api from './Api';
+import Api         from './Api';
+import ApiResponse from './ApiResponse';
+
+import Endpoint from './Endpoint';
+import Resource from './Resource';
+
+export { Endpoint, Resource, ApiResponse };
 
 export default {
   install ( Vue, options = {} ) {
