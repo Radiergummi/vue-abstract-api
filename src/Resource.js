@@ -66,15 +66,15 @@ class Resource extends Endpoint {
       requestOptions.params[ this.constructor.parameterNames.orderDirection ] = mergedOptions.orderDirection;
     }
 
-    if ( mergedOptions.multipleOrderColumns ) {
-      const orderColumns = Object.entries( mergedOptions.multipleOrderColumns );
+    if ( mergedOptions.orderColumns ) {
+      const orderColumns = Object.entries( mergedOptions.orderColumns );
 
       if ( orderColumns.length === 1 ) {
         requestOptions.params[ this.constructor.parameterNames.orderColumn ]    = orderColumns[ 0 ][ 0 ];
         requestOptions.params[ this.constructor.parameterNames.orderDirection ] = orderColumns[ 0 ][ 1 ];
       } else {
-        requestOptions.params[ this.constructor.parameterNames.multipleOrderColumns ] = this.constructor.mapOrders(
-          mergedOptions.multipleOrderColumns
+        requestOptions.params[ this.constructor.parameterNames.orderColumns ] = this.constructor.mapOrders(
+          mergedOptions.orderColumns
         );
       }
     }

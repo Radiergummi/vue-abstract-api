@@ -37,12 +37,18 @@ class ApiResponse {
      * @private
      */
     this._data = mapResults( axiosResponse );
+    this._status    = axiosResponse.status;
+    this._headers   = axiosResponse.headers;
+    this._request   = axiosResponse.request;
+    this._response  = axiosResponse;
+    this._url       = axiosResponse.request.responseURL;
 
-    this._status   = axiosResponse.status;
-    this._headers  = axiosResponse.headers;
-    this._request  = axiosResponse.request;
-    this._response = axiosResponse;
-    this._url      = axiosResponse.request.responseURL;
+    /**
+     * Whether the response has been served from cache
+     *
+     * @type {boolean}
+     */
+    this.fromCache = false;
   }
 
   /**

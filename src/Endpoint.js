@@ -181,12 +181,19 @@ class Endpoint {
       }
 
       if ( this.cache.has( cacheUrl.toString() ) ) {
-        return this.cache.get( cacheUrl.toString() );
+        const response = this.cache.get( cacheUrl.toString() );
+
+        response.fromCache = true;
+
+        return response;
       }
 
       // storing the response promise, implementations won't notice whether they're using a new
       // response or the cached one.
-      const response = new ApiResponse( await this.api.http.get( path, options, ...args ), this.constructor.mapResults );
+      const response = new ApiResponse(
+        await this.api.http.get( path, options, ...args ),
+        this.constructor.mapResults
+      );
 
       // cache the response
       this.cache.set( response.url, response );
