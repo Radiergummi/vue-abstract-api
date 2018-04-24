@@ -96,6 +96,31 @@ Object with the properties `username` and `password`. They will be directly pass
 
 #### `interceptors`
 Object with the properties `request` and `response`. Both can contain the respective interceptors and will be directly passed down to axios. See [here](https://github.com/axios/axios#interceptors).
+Interceptors must be passed as objects like this:
+
+```js
+interceptors: {
+
+    // request interceptors
+    request: [
+
+        // a single interceptor
+        {
+            // required, we need at least the success interceptor
+            success: request => {
+                // handle the request, return it back
+                return request;
+            },
+
+            // optional, passing a success handler is enough
+            error: response => {}
+        }
+    ],
+
+    // response interceptors - see above
+    response: []
+}
+```
 
 What's **not** included right now is to change the content-type to anything but JSON. That will likely change soon, though.
 
