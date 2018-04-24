@@ -4,8 +4,9 @@
 // Example configuration using jsonplaceholder.typicode.com
 //
 
-import Photos from './endpoints/Photos';
-import Posts  from './endpoints/Posts';
+import EventBus from './EventBus';
+import Photos   from './endpoints/Photos';
+import Posts    from './endpoints/Posts';
 
 /**
  * Provides configuration for the API abstraction layer
@@ -33,5 +34,34 @@ export default {
   endpoints: [
     Posts,
     Photos
-  ]
+  ],
+
+  interceptors: {
+    request: [
+      config => {
+        if ( config.method === 'get' ) {
+          EventBus.$emit( 'status-update', {
+            status: 'downloading'
+          } );
+        } else {
+          EventBus.$emit( 'status-update', {
+            status: 'uploading'
+          } );
+        }
+
+        return config;
+      }
+    ],
+
+    response: [
+      response => {
+        EventBus.$emit( 'status-update', {
+          status: 'success'
+        } );
+
+        return response;
+      }
+    ]
+  }
 };
+

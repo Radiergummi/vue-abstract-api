@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>Photos<span class="photos-counter" v-show="photos.length"> ({{ photos.length }})</span></h2>
     <div class="fetch-x-photos">
       <span>Fetch </span><input type="number" min="1"
                                 v-model="limitInput"><span> photo{{ limitInput > 1 ? 's': '' }}, starting at </span><input
@@ -10,7 +9,9 @@
       v-model="orderFieldInput"><option value="id">ID</option><option
       value="title">title</option></select></span>
       <button v-on:click="fetchPhotos">Fetch</button>
-      <span class="loading-indicator" v-show=""></span>
+      <transition name="fade">
+        <div class="loading-indicator" v-show="loading"></div>
+      </transition>
     </div>
     <pre class="code-preview">await $api.photos.paginate({{ limitInput }}{{ offsetInput > 0 ? ', ' + offsetInput : '' }}){{ limitInput > 1 ? `.orderBy(${orderFieldInput}, ${orderDirectionInput})` : '' }}.index();</pre>
     <ul>
@@ -32,12 +33,15 @@
         offsetInput:         0,
         orderDirectionInput: 'ASC',
         orderFieldInput:     'id',
-        photos:              []
+        photos:              [],
+        loading:             false
       };
     },
 
     methods: {
       async fetchPhotos () {
+        this.loading = true;
+
         const limit  = this.limitInput || 10;
         const offset = this.offsetInput || 0;
 
@@ -67,7 +71,8 @@
         console.groupEnd();
         console.groupEnd();
 
-        this.photos = photosResponse.results;
+        this.photos  = photosResponse.results;
+        this.loading = false;
       }
     }
   };

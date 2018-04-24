@@ -101,7 +101,7 @@ class Photos extends Resource {
    */
   static get mapResults () {
     return response => {
-      const results = Array.from( response.data );
+      const results = Array.isArray( response.data ) ? response.data : [ response.data ];
 
       return {
         results: results,

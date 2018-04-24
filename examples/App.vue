@@ -29,7 +29,7 @@
             <span class="example-description">Retrieves all entities from an endpoint</span>
           </a>
         </header>
-        <index-example></index-example>
+        <index-example/>
       </section>
 
       <section class="example" id="example-one">
@@ -39,19 +39,33 @@
             <span class="example-description">Retrieves a single entity by ID</span>
           </a>
         </header>
-        foo
+        <one-example/>
+      </section>
+
+      <section class="example" id="example-all">
+        <header class="example-header">
+          <a href="#example-all" class="block-link">
+            <h2 class="example-title">All</h2>
+            <span class="example-description">Retrieves all entities</span>
+          </a>
+        </header>
+        <all-example/>
       </section>
     </div>
   </article>
 </template>
 
 <script>
+  import AllExample   from './exampleComponents/AllExample';
   import IndexExample from './exampleComponents/IndexExample';
+  import OneExample   from './exampleComponents/OneExample';
 
   export default {
     name: 'App',
 
     components: {
+      AllExample,
+      OneExample,
       IndexExample
     }
   };

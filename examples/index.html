@@ -8,6 +8,8 @@
       :root {
         --color-primary:     #03a9f4;
         --color-secondary:   #f9f9f9;
+        --color-gray-light:  rgba(0, 0, 30, 0.05);
+        --color-gray-dark:   #555;
         --text-shadow-dark:  -1px -1px rgba(0, 0, 0, 0.1);
         --text-shadow-light: 1px 1px #fff;
 
@@ -38,7 +40,8 @@
         color:           inherit;
       }
 
-      a:hover {
+      a:hover,
+      a:focus {
         text-decoration: underline;
       }
 
@@ -50,18 +53,30 @@
       p {
         margin:      0 auto;
         max-width:   calc(var(--spacing-base) * 45);
-        color:       #555;
+        color:       var(--color-gray-dark);
         font-weight: var(--font-weight-base);
       }
 
       code {
         padding:       var(--spacing-quarter);
-        background:    rgba(0, 0, 30, 0.05);
+        background:    var(--color-gray-light);
         border-radius: var(--spacing-quarter);
         white-space:   nowrap;
       }
 
       pre {
+        padding:       var(--spacing-half);
+        border-radius: var(--spacing-quarter);
+        background:    var(--color-gray-light);
+        color:         var(--color-gray-dark);
+        text-shadow:   var(--text-shadow-light);
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-weight: var(--font-weight-base);
       }
 
       .main-header {
@@ -72,7 +87,6 @@
       }
 
       .main-header h1 {
-        font-weight: var(--font-weight-base);
         font-size:   var(--spacing-double);
         margin:      0 0 var(--spacing-double);
         text-shadow: var(--text-shadow-dark);
@@ -87,16 +101,19 @@
         padding:         var(--spacing-half);
         border-radius:   50%;
         text-decoration: none;
+        outline:         none;
         transition:      all 0.25s 0.25s;
       }
 
-      .main-header .go:hover {
+      .main-header .go:hover,
+      .main-header .go:focus-within {
         background: var(--color-secondary);
         box-shadow: 1px 1px rgba(0, 0, 0, 0.1);
         transition: all 0.25s;
       }
 
-      .main-header .go:hover .logo {
+      .main-header .go:hover .logo,
+      .main-header .go:focus-within .logo {
         transform: scale(0.9);
       }
 
@@ -132,17 +149,20 @@
         border-radius: 0 var(--spacing-triple) var(--spacing-triple) 0;
       }
 
-      .main-header .go:hover::before {
+      .main-header .go:hover::before,
+      .main-header .go:focus-within::before {
         opacity:        1;
         transition:     opacity 0.25s 0.25s, transform 0.5s;
         pointer-events: all;
       }
 
-      .main-header .go:first-child:hover::before {
+      .main-header .go:first-child:hover::before,
+      .main-header .go:first-child:focus-within::before {
         transform: translateX(calc(-100% + 2.5rem));
       }
 
-      .main-header .go:last-child:hover::before {
+      .main-header .go:last-child:hover::before,
+      .main-header .go:last-child:focus-within::before {
         transform: translateX(calc(100% - 2.5rem));
       }
 
@@ -237,7 +257,8 @@
         text-transform: lowercase;
       }
 
-      .example-header:hover .block-link::after {
+      .example-header:hover .block-link::after,
+      .example-header:focus-within .block-link::after {
         transform: scale(1);
         opacity:   1;
       }
@@ -253,6 +274,36 @@
         }
       }
 
+      .loading-indicator {
+        display:        inline-block;
+        margin:         0 var(--spacing-half);
+        border:         2px solid var(--color-secondary);
+        border-radius:  50%;
+        border-top:     2px solid var(--color-primary);
+        width:          var(--spacing-base);
+        height:         var(--spacing-base);
+        vertical-align: middle;
+        animation:      spin 2s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .fade-enter-active,
+      .fade-leave-active {
+        transition: opacity .5s;
+      }
+
+      .fade-enter,
+      .fade-leave-to {
+        opacity: 0;
+      }
     </style>
   </head>
   <body>
