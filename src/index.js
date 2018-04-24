@@ -24,11 +24,11 @@ export default {
       };
     } else {
       if ( !options.interceptors.hasOwnProperty( 'request' ) ) {
-        options.interceptors.request = {};
+        options.interceptors.request = [];
       }
 
       if ( !options.interceptors.hasOwnProperty( 'response' ) ) {
-        options.interceptors.response = {};
+        options.interceptors.response = [];
       }
     }
 
