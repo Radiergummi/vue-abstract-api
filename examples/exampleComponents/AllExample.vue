@@ -3,24 +3,30 @@
     <div class="fetch-all-photos">
       <span>Fetch all photos</span>
       <button v-on:click="fetchPhotos">Fetch</button>
-      <transition name="fade">
-        <div class="loading-indicator" v-show="loading"></div>
-      </transition>
+      <transition-group name="fade">
+        <div class="loading-indicator" :key="0" v-show="loading"></div>
+        <div class="error-indicator" :key="1" v-show="error"></div>
+      </transition-group>
     </div>
-    <pre class="code-preview">await $api.photos.all();</pre>
+    <code-snippet title="Code example">
+      await $api.photos.all();
+    </code-snippet>
     <button v-for="photo in photos" :key="photo.id" v-on:click="showPhoto(photo.id)">{{ photo.id }}</button>
   </div>
 </template>
 
 <script>
 
-  export default {
-    name: 'AllExample',
+  import CodeSnippet from './CodeSnippet';
 
+  export default {
+    name:       'AllExample',
+    components: { CodeSnippet },
     data () {
       return {
         photos:  [],
-        loading: false
+        loading: false,
+        error:   false
       };
     },
 
@@ -35,7 +41,13 @@
         console.info( 'Starting request' );
         console.time( 'API call duration' );
 
-        this.photos = await this.$api.photos.all();
+        try {
+          this.photos = await this.$api.photos.all();
+          this.error  = false;
+        } catch ( error ) {
+          this.error = true;
+          alert( `An error occurred: ${error.message}` );
+        }
 
         console.timeEnd( 'API call duration' );
         console.groupEnd();
@@ -46,7 +58,15 @@
       async showPhoto ( id ) {
         this.loading = true;
 
-        const photo = await this.$api.photos.one( id );
+        let photo = {};
+
+        try {
+          photo      = await this.$api.photos.one( id );
+          this.error = false;
+        } catch ( error ) {
+          this.error = true;
+          alert( `An error occurred: ${error.message}` );
+        }
 
         this.loading = false;
         alert( `Title of the photo with ID ${id} is "${photo.title}".` );

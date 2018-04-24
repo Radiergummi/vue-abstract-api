@@ -3,11 +3,14 @@
     <div class="fetch-photo">
       <span>Fetch photo with ID </span><input type="number" min="1" v-model="idInput">
       <button v-on:click="fetchPhoto">Fetch</button>
-      <transition name="fade">
-        <div class="loading-indicator" v-show="loading"></div>
-      </transition>
+      <transition-group name="fade">
+        <div class="loading-indicator" :key="0" v-show="loading"></div>
+        <div class="error-indicator" :key="1" v-show="error"></div>
+      </transition-group>
     </div>
-    <pre class="code-preview">await $api.photos.one({{ idInput }});</pre>
+    <code-snippet title="Code example">
+      await $api.photos.one({{ idInput }});
+    </code-snippet>
     <div v-if="photo">
       <h2>{{ photo.title }}</h2>
       <img :src="photo.thumbnailUrl" :alt="photo.id">
@@ -16,14 +19,17 @@
 </template>
 
 <script>
-  export default {
-    name: 'OneExample',
+  import CodeSnippet from './CodeSnippet';
 
+  export default {
+    name:       'OneExample',
+    components: { CodeSnippet },
     data () {
       return {
         idInput: 1,
         photo:   null,
-        loading: false
+        loading: false,
+        error:   false
       };
     },
 
@@ -35,7 +41,13 @@
         console.info( 'Starting request' );
         console.time( 'API call duration' );
 
-        this.photo = await this.$api.photos.one( this.idInput );
+        try {
+          this.photo = await this.$api.photos.one( this.idInput );
+          this.error = false;
+        } catch ( error ) {
+          this.error = true;
+          alert( `An error occurred: ${error.message}` );
+        }
 
         console.timeEnd( 'API call duration' );
         console.groupEnd();
