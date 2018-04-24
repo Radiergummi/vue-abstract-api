@@ -9,6 +9,7 @@
  - Adapts to almost any API structure
  - Lightweight layer on top of [axios](https://github.com/axios/axios)
 
+**You can try it here: [radiergummi.github.io/vue-abstract-api](https://radiergummi.github.io/vue-abstract-api/)**
 
 ## Installation
 To install the plugin, just `npm install` it.
