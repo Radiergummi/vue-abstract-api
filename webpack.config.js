@@ -4,19 +4,21 @@
  __dirname
  */
 
+const UglifyJsPlugin = require( 'uglifyjs-webpack-plugin' );
+
 module.exports = {
-  entry:     [
+  entry:        [
     './examples/main.js'
   ],
-  output:    {
+  output:       {
     path:       __dirname + '/examples/build',
     publicPath: '/build/',
     filename:   'app.js'
   },
-  devServer: {
+  devServer:    {
     contentBase: './examples'
   },
-  module:    {
+  module:       {
     rules: [
       /*
        {
@@ -41,18 +43,31 @@ module.exports = {
             loader:  'file-loader',
             options: {
               useRelativePath: true,
-              publicPath: './build/assets',
-              context: ''
+              publicPath:      './build/assets',
+              context:         ''
             }
           }
         ]
       }
     ]
   },
-  resolve:   {
+  resolve:      {
     extensions: [ '*', '.js', '.vue' ],
     alias:      {
       'vue$': 'vue/dist/vue.esm.js'
     }
+  },
+  optimization: {
+    minimizer: [
+      new UglifyJsPlugin( {
+                            uglifyOptions: {
+                              mangle: {
+
+                                // required to prevent webpack from renaming the endpoints
+                                keep_fnames: true
+                              }
+                            }
+                          } )
+    ]
   }
 };
