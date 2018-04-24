@@ -4,9 +4,9 @@
 // Example configuration using jsonplaceholder.typicode.com
 //
 
-import EventBus from './EventBus';
 import Photos   from './endpoints/Photos';
 import Posts    from './endpoints/Posts';
+import EventBus from './EventBus';
 
 /**
  * Provides configuration for the API abstraction layer
@@ -36,30 +36,42 @@ export default {
     Photos
   ],
 
+  /**
+   * Holds any request and response interceptors that should get passed down to axios. Interceptors must be
+   * passed as objects with two properties: success and optionally error, both callbacks.
+   *
+   * @see https://github.com/axios/axios#interceptors
+   *
+   * @type {{request: Array<{success: function(config: Object): Object, error: function(response: AxiosResponse): AxiosResponse}>, response: Array<{success: function(config: Object): Object, error: function(response: AxiosResponse): AxiosResponse}>}}
+   */
   interceptors: {
     request: [
-      config => {
-        if ( config.method === 'get' ) {
-          EventBus.$emit( 'status-update', {
-            status: 'downloading'
-          } );
-        } else {
-          EventBus.$emit( 'status-update', {
-            status: 'uploading'
-          } );
-        }
+      {
+        success: config => {
+          if ( config.method === 'get' ) {
+            EventBus.$emit( 'status-update', {
+              status: 'downloading'
+            } );
+          } else {
+            EventBus.$emit( 'status-update', {
+              status: 'uploading'
+            } );
+          }
 
-        return config;
+          return config;
+        }
       }
     ],
 
     response: [
-      response => {
-        EventBus.$emit( 'status-update', {
-          status: 'success'
-        } );
+      {
+        success: response => {
+          EventBus.$emit( 'status-update', {
+            status: 'success'
+          } );
 
-        return response;
+          return response;
+        }
       }
     ]
   }

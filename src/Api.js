@@ -78,11 +78,11 @@ class Api {
     );
 
     for ( let interceptor of options.interceptors.request ) {
-      this.http.interceptors.request.use( interceptor );
+      this.http.interceptors.request.use( interceptor.success, interceptor.error );
     }
 
     for ( let interceptor of options.interceptors.response ) {
-      this.http.interceptors.response.use( interceptor );
+      this.http.interceptors.response.use( interceptor.success, interceptor.error );
     }
 
     // create a set for the endpoints to be mounted
