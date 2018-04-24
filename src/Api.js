@@ -57,10 +57,10 @@ class Api {
      *
      * @type {Object}
      */
-    this.headers = Object.assign( {}, options.headers, {
+    this.headers = Object.assign( {}, {
       'Content-Type':     this.constructor.type,
       'X-Requested-With': 'XMLHttpRequest'
-    } );
+    }, options.headers );
 
     this.authentication = options.authentication;
 
@@ -77,12 +77,12 @@ class Api {
       }
     );
 
-    for (let interceptor of options.interceptors.request) {
-      this.http.interceptors.request.use(interceptor);
+    for ( let interceptor of options.interceptors.request ) {
+      this.http.interceptors.request.use( interceptor );
     }
 
-    for (let interceptor of options.interceptors.response) {
-      this.http.interceptors.response.use(interceptor);
+    for ( let interceptor of options.interceptors.response ) {
+      this.http.interceptors.response.use( interceptor );
     }
 
     // create a set for the endpoints to be mounted
