@@ -61,11 +61,7 @@ module.exports = {
     minimizer: [
       new UglifyJsPlugin( {
                             uglifyOptions: {
-                              mangle: {
-
-                                // required to prevent webpack from renaming the endpoints
-                                keep_fnames: true
-                              }
+                              keep_fnames: true,
                             }
                           } )
     ]

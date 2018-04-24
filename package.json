@@ -7,7 +7,7 @@
     "build": "babel src -d build",
     "example:build": "webpack --config ./webpack.config.js --mode production",
     "example:start": "webpack-dev-server --config ./webpack.config.js --mode development",
-    "docs:build": "npm run example:build && cp -R ./examples/index.html ./examples/build ./docs/"
+    "docs:build": "webpack --config ./webpack.config.js --mode development && cp -R ./examples/index.html ./examples/build ./docs/"
   },
   "directories": {
     "example": "examples",
