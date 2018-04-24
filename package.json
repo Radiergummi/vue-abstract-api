@@ -6,7 +6,8 @@
   "scripts": {
     "build": "babel src -d build",
     "example:build": "webpack --config ./webpack.config.js --mode production",
-    "example:start": "webpack-dev-server --config ./webpack.config.js --mode development"
+    "example:start": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "docs:build": "npm run example:build && cp -R ./examples/index.html ./examples/build ./docs/"
   },
   "directories": {
     "example": "examples",
@@ -20,6 +21,7 @@
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.11",
     "file-loader": "^1.1.11",
     "vue": "^2.5.16",
     "vue-loader": "^14.2.2",

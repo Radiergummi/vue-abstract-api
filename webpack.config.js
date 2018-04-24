@@ -4,8 +4,6 @@
  __dirname
  */
 
-const path = require( 'path' );
-
 module.exports = {
   entry:     [
     './examples/main.js'
@@ -33,7 +31,11 @@ module.exports = {
         use:     [ 'vue-loader' ]
       },
       {
-        exclude: [ /\.js$/, /\.html$/, /\.vue/ ],
+        test: /\.css$/,
+        use:  [ 'css-loader' ]
+      },
+      {
+        exclude: [ /\.js$/, /\.html$/, /\.css$/, /\.vue$/ ],
         use:     [ 'file-loader' ]
       }
     ]
