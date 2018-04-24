@@ -36,7 +36,16 @@ module.exports = {
       },
       {
         exclude: [ /\.js$/, /\.html$/, /\.css$/, /\.vue$/ ],
-        use:     [ 'file-loader' ]
+        use:     [
+          {
+            loader:  'file-loader',
+            options: {
+              useRelativePath: true,
+              publicPath: './build/assets',
+              context: ''
+            }
+          }
+        ]
       }
     ]
   },
