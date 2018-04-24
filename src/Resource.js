@@ -99,6 +99,8 @@ class Resource extends Endpoint {
    * @returns {Promise<Array>}
    */
   async all ( options = {} ) {
+    options.paginate = false;
+
     const response = await this.index( options );
 
     return response.results;
@@ -111,10 +113,10 @@ class Resource extends Endpoint {
    * @param   {Object}     [options]
    * @returns {Promise<*>}
    */
-  one ( id, options = {} ) {
-    return this
-      .get( `${this.path}/${id}`, options )
-      .then( response => response.first );
+  async one ( id, options = {} ) {
+    const response = await this.get( `${this.path}/${id}`, options );
+
+    return response.first;
   }
 
   /**

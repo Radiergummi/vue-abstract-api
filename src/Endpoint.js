@@ -176,7 +176,7 @@ class Endpoint {
     if ( this.constructor.cachable ) {
       const cacheUrl = new URL( path, this.api.baseUrl );
 
-      for ( let [ name, value ]of Object.entries( options.params ) ) {
+      for ( let [ name, value ]of Object.entries( options.params || {} ) ) {
         cacheUrl.searchParams.append( name, value );
       }
 
