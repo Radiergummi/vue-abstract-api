@@ -56,6 +56,10 @@ class Resource extends Endpoint {
       )
     };
 
+    if ( mergedOptions.headers ) {
+      requestOptions.headers = mergedOptions.headers;
+    }
+
     if ( mergedOptions.paginate ) {
       requestOptions.params[ this.constructor.parameterNames.limit ]  = mergedOptions.limit;
       requestOptions.params[ this.constructor.parameterNames.offset ] = mergedOptions.offset;
