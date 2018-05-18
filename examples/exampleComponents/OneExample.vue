@@ -47,6 +47,7 @@
         } catch ( error ) {
           this.error = true;
           alert( `An error occurred: ${error.message}` );
+          console.error( 'Request error: ', error );
         }
 
         console.timeEnd( 'API call duration' );
