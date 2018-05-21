@@ -84,9 +84,10 @@ class Resource extends Endpoint {
     }
 
     if ( mergedOptions.filterColumns ) {
-      requestOptions.params[ this.parameterNames.filterColumns ] = this.constructor.mapFilters(
+      Object.assign( requestOptions.params, this.constructor.mapFilters(
+        this.parameterNames.filterColumns,
         mergedOptions.filterColumns
-      );
+      ) );
     }
 
     // reset all active options after building the request options

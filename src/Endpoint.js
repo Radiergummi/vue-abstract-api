@@ -70,16 +70,23 @@ class Endpoint {
   }
 
   /**
-   * Default filter mapper. Accepts a filter list, returns a comma-separated, key=value assignment string.
-   * This should be overridden if required, just make sure to return a string.
+   * Default filter mapper. Accepts the field parameter name and a filter list, returns an object containing
+   * the final request parameters for these filters. Will be merged with the params object.
+   * This should be overridden if required, just make sure to return an object. The default mapper just
+   * prefixes all filters with the global filter parameter name.
    *
-   * @returns {function(filters: Object): string}
+   * @returns {function(parameterName: String, filters: Object): Object}
    */
   static get mapFilters () {
-    return filters => Object
-      .entries( filters )
-      .map( ( [ field, value ] ) => `${field}:${value}` )
-      .join( ',' );
+    return ( parameterName, filters ) => {
+      const mappedFilters = {};
+
+      for ( let filterName in filters ) {
+        mappedFilters[ parameterName + filterName ] = filters[ filterName ];
+      }
+
+      return mappedFilters;
+    };
   }
 
   /**
